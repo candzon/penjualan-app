@@ -84,8 +84,9 @@
 
     {{-- Modal add products --}}
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <form action="" method="POST">
+        <div class="modal-dialog">
+            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
@@ -96,7 +97,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
-                                    <input type="email" name="nama_produk" class="form-control" id="exampleFormControlInput1">
+                                    <input type="text" name="nama_produk" class="form-control"
+                                        id="exampleFormControlInput1">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -105,10 +107,32 @@
                                     <input type="text" name="price" class="form-control" id="format_rupiah">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
-                                    <input type="text" name="price" class="form-control" id="format_rupiah">
+                                    <label for="exampleFormControlInput1" class="form-label">Stok</label>
+                                    <input type="text" name="stok" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
+                                    <textarea name="keterangan" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Category</label>
+                                    <select name="category_id" class="form-select" id="">
+                                        @foreach ($categories as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Foto</label>
+                                    <input class="form-control" type="file" name="file">
                                 </div>
                             </div>
                         </div>
@@ -124,30 +148,74 @@
     {{-- End Modal add --}}
 
     {{-- Modal Edit products --}}
-    <div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="" method="POST">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+    @foreach ($produks as $items)
+        <div class="modal fade" id="exampleModalEdit{{ $items->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="{{ route('products.update', ['product' => $items->id]) }}" method="POST"
+                    enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
+                                        <input type="text" name="nama_produk" class="form-control" value="{{ $items->nama_produk }}"
+                                            id="exampleFormControlInput1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Harga</label>
+                                        <input type="text" name="price" class="form-control" id="format_rupiah" value="{{ $items->price }}">  
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Stok</label>
+                                        <input type="text" name="stok" class="form-control" value="{{ $items->stock }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
+                                        <textarea name="keterangan" class="form-control" >{{ $items->keterangan}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Category</label>
+                                        <select name="category_id" class="form-select" id="">
+                                            @foreach ($categories as $cat)
+                                                <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" name="id_produks" value="{{ $items->id }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    {{-- End Modal add --}}
+    @endforeach
+    {{-- End Modal edit --}}
 
     {{-- Javascript untuk convert format kerupiah --}}
     <script>
+        /* Dengan Rupiah */
         var dengan_rupiah = document.getElementById('format_rupiah');
         dengan_rupiah.addEventListener('keyup', function(e) {
             dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');

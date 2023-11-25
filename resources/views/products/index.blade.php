@@ -2,46 +2,53 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mt-3">
             <div class="col">
-                <h3>{{ __('Products') }}</h3>
+                <h3>{{ __('List Products') }}</h3>
             </div>
             <div class="col-auto">
                 {{-- Button modal add product --}}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+                    Product</a>
             </div>
         </div>
 
 
         <div class="row">
-
-            @for ($i = 0; $i < 10; $i++)
+            @foreach ($produks as $item)
                 <div class="col-sm-3 mt-4">
                     <div class="card">
-                        <img src="{{ URL::to('/') }}/uploads/products/ban.jpg" style="max-width: auto; max-height: 150px"
-                            alt="Image">
+                        <img src="{{ asset('uploads/products/' . $item->file) }}" style="max-width: auto; max-height: 150px" alt="Image">
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold">Nama Produk</h5>
+                            <h5 class="card-title" style="font-weight: bold">{{ $item->nama_produk }}</h5>
                             <div class="row">
                                 <div class="col">
                                     <h6 class="card-text" style="color: gray">Harga</h6>
-                                    <h6 class="card-text" style="font-weight: bold">Rp 100.000</h6>
+                                    <h6 class="card-text" style="font-weight: bold">{{ $item->price }}</h6>
                                 </div>
                                 <div class="col-auto">
                                     <h6 class="card-text" style="color: gray">Stok</h6>
-                                    <h6 class="card-text">100</h6>
+                                    <h6 class="card-text">{{ $item->stock }}</h6>
                                 </div>
                             </div>
-                            <p class="card-text mt-2" style="color: gray">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem aspernatur quasi quam explicabo rem illo molestiae omnis impedit deleniti eos, laudantium repellat fugit praesentium officia voluptatem hic cumque minus blanditiis.</p>
+                            <h6 class="card-text mt-2" style="color: gray">Kategori</h6>
+                            <h6 class="card-text mt-2">{{ $item->nama_kategori }}</h6>
+                            <h6 class="card-text mt-2" style="color: gray">Keterangan</h6>
+                            <p class="card-text mt-0">{{ $item->keterangan }}</p>
                             {{-- Button modal edit --}}
-                            <button type="button" class="btn btn-primary form-control" data-bs-toggle="modal" data-bs-target="#exampleModalEdit">Edit</button>
+                            <button type="button" class="btn btn-primary form-control" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalEdit{{ $item->id }}">Edit</button>
                             {{-- Button delete --}}
-                            
-                            <a href="#" class="btn btn-outline-primary form-control mt-2">Delete</a>
+                            <form action="{{ route('products.destroy', ['product' => $item->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-primary form-control mt-1">Delete</button>
+                            </form>
+                           
                         </div>
                     </div>
                 </div>
-            @endfor
+            @endforeach
         </div>
     </div>
 @endsection
