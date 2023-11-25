@@ -93,6 +93,7 @@
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Category</label>
                                     <select name="category_id" class="form-select">
+                                        <option value="NULL">Pilih</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
                                         @endforeach
@@ -163,6 +164,7 @@
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Category</label>
                                         <select name="category_id" class="form-select" id="">
+                                            <option value="NULL">Pilih</option>
                                             @foreach ($categories as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
                                             @endforeach
@@ -170,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="text" name="id_produks" value="{{ $items->id }}">
+                            <input type="text" hidden name="id_produks" value="{{ $items->id }}">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -16,13 +16,19 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
 </head>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/products') }}">
                     {{ config('app.name', 'Penjualan') }} App
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -107,6 +113,13 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
     </script>
+
+    <script>
+        function myFunction() {
+            confirm("Yakin ingin menghapus data?");
+        }
+    </script>
+
 </body>
 
 </html>
