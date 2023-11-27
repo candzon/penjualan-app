@@ -28,4 +28,4 @@ Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('/products', ProductController::class);
+Route::resource('products', ProductController::class);
