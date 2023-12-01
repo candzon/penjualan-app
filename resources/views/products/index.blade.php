@@ -166,9 +166,15 @@
                                         <select name="category_id" class="form-select" id="">
                                             <option value="NULL">Pilih</option>
                                             @foreach ($categories as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
+                                                <option value="{{ $cat->id }}" @if ($cat->id == $items->category_id) selected @endif>{{ $cat->nama_kategori }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Foto</label>
+                                        <input class="form-control" type="file" name="file">
                                     </div>
                                 </div>
                             </div>

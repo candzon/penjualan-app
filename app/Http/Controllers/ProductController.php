@@ -22,14 +22,11 @@ class ProductController extends Controller
     public function index()
     {
         // $produks = produk::orderBy('id', 'desc')->with('category')->get();
-        $produks = DB::table('produks as a')
-            ->join('categories as b', 'a.category_id', '=', 'b.id')
-            ->select('a.*', 'b.nama_kategori')
-            ->orderBy('id', 'desc')
-            ->get();
-        $categories = Category::orderBy('id', 'desc')->get();
+        $title = 'Dashboard';
+        $produks = (new Produk)->getProduks();
+        $categories = (new Category)->getCategories();
 
-        return view('products.index', compact(['produks', 'categories']));
+        return view('products.index', compact(['produks', 'categories', 'title']));
     }
 
     /**
@@ -112,6 +109,7 @@ class ProductController extends Controller
         $produk->stock = $stok;
         $produk->category_id = $category_id;
         $produk->keterangan = $keterangan;
+        $produk->updated_at = now();
         if ($request->hasfile('file')) {            
             $filename = round(microtime(true) * 1000).'-'.str_replace(' ','-',$file->getClientOriginalName());
             $request->file('file')->move(public_path('uploads/products'), $filename);

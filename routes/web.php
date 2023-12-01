@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +19,8 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
+Route::get('/', function ($title = 'Login') {
+    return view('auth.login', compact('title'));
 });
 
 Auth::routes();
@@ -28,9 +31,9 @@ Auth::routes();
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('products', ProductController::class)->except(['edit', 'update', 'store', 'create']);
+Route::resource('products', ProductController::class);
 
-Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
-Route::post('products', [ProductController::class, 'store'])->name('products.store');
-Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+Route::resource('category', CategoryController::class);
+Route::resource('customer', CustomerController::class);
+Route::resource('order', OrderController::class);
+Route::resource('orderdetail', OrderDetailController::class);
