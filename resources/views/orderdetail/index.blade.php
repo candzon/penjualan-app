@@ -39,7 +39,8 @@
                                                 data-bs-target="#exampleModalEdit{{ $o->id_order_detail }}">Edit</button>
                                         </div>
                                         <div class="col">
-                                            <form action="{{ route('orderdetail.destroy', ['orderdetail' => $o->id_order_detail]) }}"
+                                            <form
+                                                action="{{ route('orderdetail.destroy', ['orderdetail' => $o->id_order_detail]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -117,8 +118,8 @@
 
     {{-- Modal Edit products --}}
     @foreach ($orderDetail as $items)
-        <div class="modal fade" id="exampleModalEdit{{ $items->id_order_detail }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModalEdit{{ $items->id_order_detail }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form action="{{ route('orderdetail.update', ['orderdetail' => $items->id_order_detail]) }}" method="POST"
                     enctype="multipart/form-data">
@@ -136,8 +137,10 @@
                                         <label for="exampleFormControlInput1" class="form-label">No Invoice</label>
                                         <select name="id_order" id="" class="form-select">
                                             <option value="0">Choose</option>
-                                            @foreach ($order as $o)
-                                                <option value="{{ $o->id_order }}" @if ($o->id_order == $items->order_id) selected @endif>{{ $items->invoice }}</option>
+                                            @foreach ($order as $pe)
+                                                <option value="{{ $pe->id_order }}"
+                                                    @if ($pe->id_order == $items->order_id) selected @endif>{{ $pe->invoice }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -147,8 +150,10 @@
                                         <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
                                         <select name="id_produk" id="" class="form-select">
                                             <option value="0">Choose</option>
-                                            @foreach ($produk as $p)
-                                                <option value="{{ $p->id }}" @if ($p->id == $items->product_id) selected @endif>{{ $items->nama_produk }}</option>
+                                            @foreach ($produk2 as $p)
+                                                <option value="{{ $p->id }}"
+                                                    @if ($p->id == $items->product_id) selected @endif>{{ $p->nama_produk }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -21,9 +21,11 @@ class OrderDetailController extends Controller
         $order = (new Order)->getOrder();
         $orderDetail = (new Order_detail)->getOrderDetail();
         $orderDetail2 = (new Order_detail)->getOrderDetail2();
+
+        $getOrder = DB::table('orders as a')->select('a.id as id_order', 'a.invoice')->get();
         $produk = (new Produk)->getProduks();
         $produk2 = DB::table('produks')->get();
-        return view('orderdetail.index', compact(['orderDetail2','produk', 'produk2','order','orderDetail', 'title']));
+        return view('orderdetail.index', compact(['getOrder', 'orderDetail2', 'produk', 'produk2', 'order', 'orderDetail', 'title']));
     }
 
     /**
@@ -78,7 +80,7 @@ class OrderDetailController extends Controller
     {
         //
         $orderDetail = Order_detail::findOrFail($id);
-        $orderDetail->order_id= $request->id_order;
+        $orderDetail->order_id = $request->id_order;
         $orderDetail->product_id = $request->id_produk;
         $orderDetail->qty = $request->qty;
         $orderDetail->price = $request->price;

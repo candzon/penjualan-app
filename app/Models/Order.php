@@ -25,6 +25,7 @@ class Order extends Model
     {
         $order = DB::table('orders as a')
             ->select('a.id as id_order', 'a.invoice', 'a.total', 'a.user_id', 'a.customer_id')
+            ->orderBy('a.id', 'desc')
             ->get();
         return $order;
     }

@@ -16,6 +16,7 @@ class Order_detail extends Model
             ->join('produks as b', 'a.product_id', '=', 'b.id')
             ->join('orders as c', 'a.order_id', '=', 'c.id')
             ->select('a.id as id_order_detail', 'a.order_id', 'a.product_id', 'a.qty', 'a.price', 'b.nama_produk', 'c.invoice')
+            ->orderBy('id_order_detail', 'desc')
             ->get();
         return $orderDetail;
     }
@@ -27,6 +28,4 @@ class Order_detail extends Model
             ->get();
         return $orderDetail;
     }
-
-
 }

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
 
 class OrderController extends Controller
@@ -20,8 +21,8 @@ class OrderController extends Controller
         $orders = (new Order())->getOrders();
         $order2 = (new Order())->getOrder();
         $customers = (new Customer())->getCustomers();
-        $users = (new User())->getUsers();
-        return view('order.index', compact(['order2','customers', 'users', 'orders', 'title']));
+        $users = DB::table('users')->get();
+        return view('order.index', compact(['order2', 'customers', 'users', 'orders', 'title']));
     }
 
     /**
