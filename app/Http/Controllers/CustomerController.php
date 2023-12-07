@@ -17,7 +17,7 @@ class CustomerController extends Controller
         //
         $title = 'Customer';
         $customers = (new Customer())->getCustomers();
-        return view('customer.index', compact(['customers','title']));
+        return view('customer.index', compact(['customers', 'title']));
     }
 
     /**
@@ -34,19 +34,29 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        $nama_customer = $request->input('nama_customer');
-        $email = $request->input('email');
-        $address = $request->input('address');
-        $phone = $request->input('phone');
-      
-        $customer = new Customer;
-        $customer->nama_customer = $nama_customer;
-        $customer->email = $email;
-        $customer->address = $address;
-        $customer->phone = $phone;
-        $customer->save();
+        try {
+            $this->validate($request, [
+                'nama_customer' => 'required',
+                'email' => 'required',
+                'address' => 'required',
+                'phone' => 'required',
+            ]);
 
-        return redirect()->route('customer.index')->with('success', 'Customer berhasil ditambahkan');
+            $nama_customer = $request->input('nama_customer');
+            $email = $request->input('email');
+            $address = $request->input('address');
+            $phone = $request->input('phone');
+
+            $customer = new Customer;
+            $customer->nama_customer = $nama_customer;
+            $customer->email = $email;
+            $customer->address = $address;
+            $customer->phone = $phone;
+            $customer->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('customer.index')->with('error', 'Customer gagal ditambahkan');
+        }
     }
 
     /**
@@ -71,19 +81,24 @@ class CustomerController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $nama_customer = $request->input('nama_customer');
-        $email = $request->input('email');
-        $address = $request->input('address');
-        $phone = $request->input('phone');
+        try {
+            $nama_customer = $request->input('nama_customer');
+            $email = $request->input('email');
+            $address = $request->input('address');
+            $phone = $request->input('phone');
 
-        $customer = Customer::find($id);
-        $customer->nama_customer = $nama_customer;
-        $customer->email = $email;
-        $customer->address = $address;
-        $customer->phone = $phone;
-        $customer->save();
+            $customer = Customer::find($id);
+            $customer->nama_customer = $nama_customer;
+            $customer->email = $email;
+            $customer->address = $address;
+            $customer->phone = $phone;
+            $customer->save();
 
-        return redirect()->route('customer.index')->with('success', 'Customer berhasil diupdate');
+            return redirect()->route('customer.index')->with('success', 'Customer berhasil diupdate');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('customer.index')->with('error', 'Customer gagal diupdate');
+        }
     }
 
     /**
@@ -91,7 +106,7 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //s
         $customer = Customer::find($id);
         $customer->delete();
 

@@ -13,6 +13,18 @@
             </div>
         </div>
 
+        {{-- Alert --}}
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- Table --}}
         <div class="row mt-5">
             <div class="container">
                 <table class="table" id="myTable">
@@ -43,7 +55,8 @@
                                                 data-bs-target="#exampleModalEdit{{ $o->id_order }}">Edit</button>
                                         </div>
                                         <div class="col">
-                                            <form action="{{ route('order.destroy', ['order' => $o->id_order]) }}" method="POST">
+                                            <form action="{{ route('order.destroy', ['order' => $o->id_order]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-primary">Delete</button>
@@ -74,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Customer</label>
-                                    <select name="id_customer" class="form-select">
+                                    <select name="id_customer" class="form-select" required>
                                         <option value="NULL">Choose</option>
                                         @foreach ($customers as $c)
                                             <option value="{{ $c->id }}">{{ $c->nama_customer }}</option>
@@ -85,7 +98,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Admin Purchasing</label>
-                                    <select name="id_user" class="form-select">
+                                    <select name="id_user" class="form-select" required>
                                         <option value="NULL">Choose</option>
                                         @foreach ($users as $u)
                                             <option value="{{ $u->id }}">{{ $u->name }}</option>
@@ -96,7 +109,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Total</label>
-                                    <input type="text" class="form-control" name="total" id="format_rupiah">
+                                    <input type="text" class="form-control" name="total" id="format_rupiah" required>
                                 </div>
                             </div>
                         </div>
@@ -113,8 +126,8 @@
 
     {{-- Modal Edit products --}}
     @foreach ($order2 as $items)
-        <div class="modal fade" id="exampleModalEdit{{ $items->id_order }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModalEdit{{ $items->id_order }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form action="{{ route('order.update', ['order' => $items->id_order]) }}" method="POST"
                     enctype="multipart/form-data">

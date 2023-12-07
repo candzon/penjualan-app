@@ -12,6 +12,20 @@
                     Customer</a>
             </div>
         </div>
+
+        {{-- Alert --}}
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+        {{-- End Alert --}}
+
+        {{-- Table --}}
         <div class="row mt-5">
             <div class="container">
                 <table class="table" id="myTable">
@@ -38,7 +52,8 @@
                                                 data-bs-target="#exampleModalEdit{{ $c->id }}">Edit</button>
                                         </div>
                                         <div class="col">
-                                            <form action="{{ route('customer.destroy', ['customer' => $c->id]) }}" method="POST">
+                                            <form action="{{ route('customer.destroy', ['customer' => $c->id]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-primary">Delete</button>
@@ -71,25 +86,25 @@
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Customer</label>
                                     <input type="text" name="nama_customer" class="form-control"
-                                        id="exampleFormControlInput1">
+                                        id="exampleFormControlInput1" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control">
+                                    <input type="email" name="email" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Address</label>
-                                    <textarea name="address" class="form-control"></textarea>
+                                    <textarea name="address" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                                    <input type="text" name="phone" class="form-control" value="">
+                                    <input type="text" name="phone" class="form-control" value="" required>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +158,8 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                                        <input type="text" name="phone" class="form-control" value="{{ $items->phone }}">
+                                        <input type="text" name="phone" class="form-control"
+                                            value="{{ $items->phone }}">
                                     </div>
                                 </div>
                             </div>

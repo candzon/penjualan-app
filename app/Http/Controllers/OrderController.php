@@ -38,14 +38,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = new Order();
-        $order->invoice = $this->generateInvoiceNumber();
-        $order->customer_id = $request->id_customer;
-        $order->user_id = $request->id_user;
-        $order->total = intval(preg_replace('/[^0-9]/', '', $request->total));
-        $order->save();
 
-        return redirect()->route('order.index')->with('success', 'Order created successfully.');
+        try {
+            $this->validate($request, [
+                'id_customer' => 'required',
+                'id_user' => 'required',
+                'total' => 'required',
+            ]);
+
+            $order = new Order();
+            $order->invoice = $this->generateInvoiceNumber();
+            $order->customer_id = $request->id_customer;
+            $order->user_id = $request->id_user;
+            $order->total = intval(preg_replace('/[^0-9]/', '', $request->total));
+            $order->save();
+            return redirect()->route('order.index')->with('success', 'Order created successfully.');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('order.index')->with('error', 'Order gagal ditambahkan');
+        }
     }
 
     /**
@@ -70,14 +81,20 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $order = Order::find($id);
-        $order->customer_id = $request->id_customer;
-        $order->user_id = $request->id_user;
-        $order->total = intval(preg_replace('/[^0-9]/', '', $request->total));
-        $order->updated_at = now();
-        $order->save();
+        try {
 
-        return redirect()->route('order.index')->with('success', 'Order updated successfully.');
+            $order = Order::find($id);
+            $order->customer_id = $request->id_customer;
+            $order->user_id = $request->id_user;
+            $order->total = intval(preg_replace('/[^0-9]/', '', $request->total));
+            $order->updated_at = now();
+            $order->save();
+
+            return redirect()->route('order.index')->with('success', 'Order updated successfully.');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('order.index')->with('error', 'Order gagal ditambahkan');
+        }
     }
 
     /**

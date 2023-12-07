@@ -13,12 +13,23 @@
             </div>
         </div>
 
+        {{-- Alert --}}
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="row">
             @foreach ($produks as $item)
                 <div class="col-sm-3 mt-4">
                     <div class="card">
-                        <img src="{{ asset('uploads/products/' . $item->file) }}" style="max-width: auto; max-height: 150px" alt="Image">
+                        <img src="{{ asset('uploads/products/' . $item->file) }}" style="max-width: auto; max-height: 150px"
+                            alt="Image">
                         <div class="card-body">
                             <h5 class="card-title" style="font-weight: bold">{{ $item->nama_produk }}</h5>
                             <div class="row">
@@ -44,7 +55,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-primary form-control mt-1">Delete</button>
                             </form>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -68,19 +79,19 @@
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
                                     <input type="text" name="nama_produk" class="form-control"
-                                        id="exampleFormControlInput1">
+                                        id="exampleFormControlInput1" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Harga</label>
-                                    <input type="text" name="price" class="form-control" id="format_rupiah">
+                                    <input type="text" name="price" class="form-control" id="format_rupiah" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Stok</label>
-                                    <input type="text" name="stok" class="form-control">
+                                    <input type="text" name="stok" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -92,7 +103,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Category</label>
-                                    <select name="category_id" class="form-select">
+                                    <select name="category_id" class="form-select" required>
                                         <option value="NULL">Pilih</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
@@ -103,7 +114,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Foto</label>
-                                    <input class="form-control" type="file" name="file">
+                                    <input class="form-control" type="file" name="file" required>
                                 </div>
                             </div>
                         </div>
@@ -138,26 +149,28 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
-                                        <input type="text" name="nama_produk" class="form-control" value="{{ $items->nama_produk }}"
-                                            id="exampleFormControlInput1">
+                                        <input type="text" name="nama_produk" class="form-control"
+                                            value="{{ $items->nama_produk }}" id="exampleFormControlInput1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Harga</label>
-                                        <input type="text" name="price" class="form-control" id="format_rupiah" value="{{ $items->price }}">  
+                                        <input type="text" name="price" class="form-control" id="format_rupiah2"
+                                            value="{{ $items->price }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Stok</label>
-                                        <input type="text" name="stok" class="form-control" value="{{ $items->stock }}">
+                                        <input type="text" name="stok" class="form-control"
+                                            value="{{ $items->stock }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
-                                        <textarea name="keterangan" class="form-control" >{{ $items->keterangan}}</textarea>
+                                        <textarea name="keterangan" class="form-control">{{ $items->keterangan }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -166,7 +179,9 @@
                                         <select name="category_id" class="form-select" id="">
                                             <option value="NULL">Pilih</option>
                                             @foreach ($categories as $cat)
-                                                <option value="{{ $cat->id }}" @if ($cat->id == $items->category_id) selected @endif>{{ $cat->nama_kategori }}</option>
+                                                <option value="{{ $cat->id }}"
+                                                    @if ($cat->id == $items->category_id) selected @endif>
+                                                    {{ $cat->nama_kategori }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -190,4 +205,53 @@
         </div>
     @endforeach
     {{-- End Modal edit --}}
+
+    {{-- Javascript untuk convert format kerupiah --}}
+    <script>
+        var dengan_rupiah = document.getElementById('format_rupiah');
+        dengan_rupiah.addEventListener('keyup', function(e) {
+            dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    </script>
+
+    <script>
+        var dengan_rupiah = document.getElementById('format_rupiah2');
+        dengan_rupiah.addEventListener('keyup', function(e) {
+            dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    </script>
 @endsection

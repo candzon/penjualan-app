@@ -13,39 +13,52 @@
             </div>
         </div>
 
+        {{-- Alert --}}
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+        {{-- End Alert --}}
+
+        {{-- Table --}}
         <div class="row mt-5">
             <div class="container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Created At</th>
-                                <th>Nama Kategori</th>
-                                <th>Keterangan</th>
-                                <th>Update At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categories as $item)
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Created At</th>
+                            <th>Nama Kategori</th>
+                            <th>Keterangan</th>
+                            <th>Update At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categories as $item)
                             <tr>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->nama_kategori }}</td>
                                 @if ($item->keterangan == null)
-                                <td>-</td>
+                                    <td>-</td>
                                 @else
-                                <td>{{ $item->keterangan }}</td>
-                                @endif 
+                                    <td>{{ $item->keterangan }}</td>
+                                @endif
                                 @if ($item->updated_at == null)
-                                <td>-</td>
+                                    <td>-</td>
                                 @else
-                                <td>{{ $item->updated_at }}</td>
+                                    <td>{{ $item->updated_at }}</td>
                                 @endif
                                 <td class="action">
                                     <div class="row">
-                                        <div class="col-sm-2">                                            
+                                        <div class="col-sm-2">
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModalEdit{{ $item->id }}">Edit</button>
-                                            </div>
+                                        </div>
                                         <div class="col">
                                             <form action="{{ route('category.destroy', ['category' => $item->id]) }}"
                                                 method="POST">
@@ -57,9 +70,9 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
 
         </div>
@@ -82,13 +95,13 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Kategori</label>
-                                    <input type="text" name="nama_kategori" class="form-control">
+                                    <input type="text" name="nama_kategori" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
-                                    <input type="text" name="keterangan" class="form-control">
+                                    <input type="text" name="keterangan" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -122,17 +135,19 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Nama Kategori</label>
-                                        <input type="text" name="nama_kategori" class="form-control" value="">
+                                        <input type="text" name="nama_kategori" class="form-control"
+                                            value="{{ $items->nama_kategori }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
-                                        <input type="text" name="keterangan" class="form-control" value="">
+                                        <input type="text" name="keterangan" class="form-control"
+                                            value="{{ $items->keterangan }}">
                                     </div>
                                 </div>
                             </div>
-                        <input type="text"  hidden name="id_kategori" value="{{ $items->id }}">
+                            <input type="text" hidden name="id_kategori" value="{{ $items->id }}">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

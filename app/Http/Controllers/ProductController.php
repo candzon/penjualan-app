@@ -43,28 +43,41 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        $nama_produk = $request->input('nama_produk');
-        $price = $request->input('price');
-        $stok = $request->input('stok');
-        $category_id = $request->input('category_id');
-        $keterangan = $request->input('keterangan');
-        $file = $request->file('file');
-        
+        try {
+            $this->validate($request, [
+                'nama_produk' => 'required',
+                'price' => 'required',
+                'stok' => 'required',
+                'category_id' => 'required',
+                'file' => 'required'
+            ]);
 
-        $produk = new Produk;
-        $produk->nama_produk = $nama_produk;
-        $produk->price = $price;
-        $produk->stock = $stok;
-        $produk->category_id = $category_id;
-        $produk->keterangan = $keterangan;
-        if ($request->hasfile('file')) {            
-            $filename = round(microtime(true) * 1000).'-'.str_replace(' ','-',$file->getClientOriginalName());
-            $request->file('file')->move(public_path('uploads/products'), $filename);
-            $produk->file = $filename;
-        }else{
-            alert('error', 'File tidak ditemukan');
+            $nama_produk = $request->input('nama_produk');
+            $price = $request->input('price');
+            $stok = $request->input('stok');
+            $category_id = $request->input('category_id');
+            $keterangan = $request->input('keterangan');
+            $file = $request->file('file');
+
+
+            $produk = new Produk;
+            $produk->nama_produk = $nama_produk;
+            $produk->price = $price;
+            $produk->stock = $stok;
+            $produk->category_id = $category_id;
+            $produk->keterangan = $keterangan;
+            if ($request->hasfile('file')) {
+                $filename = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $file->getClientOriginalName());
+                $request->file('file')->move(public_path('uploads/products'), $filename);
+                $produk->file = $filename;
+            } else {
+                alert('error', 'File tidak ditemukan');
+            }
+            $produk->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('products.index')->with('error', 'Produk gagal ditambahkan');
         }
-        $produk->save();
 
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan');
@@ -94,32 +107,37 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $id_produks = $request->input('id_produks');
-        $nama_produk = $request->input('nama_produk');
-        $price = $request->input('price');
-        $stok = $request->input('stok');
-        $category_id = $request->input('category_id');
-        $keterangan = $request->input('keterangan');
-        $file = $request->file('file');
+        try {
+            $id_produks = $request->input('id_produks');
+            $nama_produk = $request->input('nama_produk');
+            $price = $request->input('price');
+            $stok = $request->input('stok');
+            $category_id = $request->input('category_id');
+            $keterangan = $request->input('keterangan');
+            $file = $request->file('file');
 
-        $produk = Produk::find($id);
-        $produk->id = $id_produks;
-        $produk->nama_produk = $nama_produk;
-        $produk->price = $price;
-        $produk->stock = $stok;
-        $produk->category_id = $category_id;
-        $produk->keterangan = $keterangan;
-        $produk->updated_at = now();
-        if ($request->hasfile('file')) {            
-            $filename = round(microtime(true) * 1000).'-'.str_replace(' ','-',$file->getClientOriginalName());
-            $request->file('file')->move(public_path('uploads/products'), $filename);
-            $produk->file = $filename;
-        }else{
-            alert('error', 'File tidak ditemukan');
+            $produk = Produk::find($id);
+            $produk->id = $id_produks;
+            $produk->nama_produk = $nama_produk;
+            $produk->price = $price;
+            $produk->stock = $stok;
+            $produk->category_id = $category_id;
+            $produk->keterangan = $keterangan;
+            $produk->updated_at = now();
+            if ($request->hasfile('file')) {
+                $filename = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $file->getClientOriginalName());
+                $request->file('file')->move(public_path('uploads/products'), $filename);
+                $produk->file = $filename;
+            } else {
+                alert('error', 'File tidak ditemukan');
+            }
+            $produk->save();
+
+            return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('products.index')->with('error', 'Produk gagal diupdate');
         }
-        $produk->save();
-
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate');
     }
 
     /**

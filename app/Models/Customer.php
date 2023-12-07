@@ -10,6 +10,7 @@ class Customer extends Model
 {
     use HasFactory;
     protected $tables = 'customers';
+    protected $guarded = [];
 
     public function getCustomers()
     {

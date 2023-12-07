@@ -33,15 +33,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        $nama_kategori = $request->input('nama_kategori');
-        $keterangan = $request->input('keterangan');
+        try {
+            $this->validate($request, [
+                'nama_kategori' => 'required',
+            ]);
 
-        $category = new Category;
-        $category->nama_kategori = $nama_kategori;
-        $category->keterangan = $keterangan;
-        $category->save();
+            $nama_kategori = $request->input('nama_kategori');
+            $keterangan = $request->input('keterangan');
 
-        return redirect()->route('category.index')->with('success', 'Category berhasil ditambahkan');
+            $category = new Category;
+            $category->nama_kategori = $nama_kategori;
+            $category->keterangan = $keterangan;
+            $category->save();
+        } catch (\Throwable $th) {
+            return redirect()->route('category.index')->with('error', 'Category gagal ditambahkan');
+        }
     }
 
     /**
@@ -66,16 +72,20 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $nama_kategori = $request->input('nama_kategori');
-        $keterangan = $request->input('keterangan');
+        try {
+            $nama_kategori = $request->input('nama_kategori');
+            $keterangan = $request->input('keterangan');
 
-        $category = Category::find($id);
-        $category->nama_kategori = $nama_kategori;
-        $category->keterangan = $keterangan;
-        $category->updated_at = now();
-        $category->save();
+            $category = Category::find($id);
+            $category->nama_kategori = $nama_kategori;
+            $category->keterangan = $keterangan;
+            $category->updated_at = now();
+            $category->save();
 
-        return redirect()->route('category.index')->with('success', 'Category berhasil diubah');
+            return redirect()->route('category.index')->with('success', 'Category berhasil diubah');
+        } catch (\Throwable $th) {
+            return redirect()->route('category.index')->with('error', 'Category gagal diubah');
+        }
     }
 
     /**
@@ -86,7 +96,7 @@ class CategoryController extends Controller
         //
         $category = Category::find($id);
         $category->delete();
-        
+
         return redirect()->route('category.index')->with('success', 'Category berhasil dihapus');
     }
 }

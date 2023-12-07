@@ -42,19 +42,31 @@ class OrderDetailController extends Controller
     public function store(Request $request)
     {
         //
-        $invoice = $request->id_order;
-        $id_produk = $request->id_produk;
-        $qty = $request->qty;
-        $price = $request->price;
+        try {
+            $this->validate($request, [
+                'id_order' => 'required',
+                'id_produk' => 'required',
+                'qty' => 'required',
+                'price' => 'required',
+            ]);
 
-        $orderDetail = new Order_detail();
-        $orderDetail->order_id = $invoice;
-        $orderDetail->product_id = $id_produk;
-        $orderDetail->qty = $qty;
-        $orderDetail->price = $price;
-        $orderDetail->save();
+            $invoice = $request->id_order;
+            $id_produk = $request->id_produk;
+            $qty = $request->qty;
+            $price = $request->price;
 
-        return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil ditambahkan');
+            $orderDetail = new Order_detail();
+            $orderDetail->order_id = $invoice;
+            $orderDetail->product_id = $id_produk;
+            $orderDetail->qty = $qty;
+            $orderDetail->price = $price;
+            $orderDetail->save();
+
+            return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('orderdetail.index')->with('error', 'Order Detail gagal ditambahkan');
+        }
     }
 
     /**
@@ -79,14 +91,24 @@ class OrderDetailController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $orderDetail = Order_detail::findOrFail($id);
-        $orderDetail->order_id = $request->id_order;
-        $orderDetail->product_id = $request->id_produk;
-        $orderDetail->qty = $request->qty;
-        $orderDetail->price = $request->price;
-        $orderDetail->save();
+        try {
+            $invoice = $request->id_order;
+            $id_produk = $request->id_produk;
+            $qty = $request->qty;
+            $price = $request->price;
 
-        return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil diupdate');
+            $orderDetail = Order_detail::findOrFail($id);
+            $orderDetail->order_id = $invoice;
+            $orderDetail->product_id = $id_produk;
+            $orderDetail->qty = $qty;
+            $orderDetail->price = $price;
+            $orderDetail->save();
+
+            return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil diupdate');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('orderdetail.index')->with('error', 'Order Detail gagal diupdate');
+        }
     }
 
     /**

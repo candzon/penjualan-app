@@ -13,6 +13,18 @@
             </div>
         </div>
 
+        {{-- Alert --}}
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- Table --}}
         <div class="row mt-5">
             <div class="container">
                 <table class="table" id="myTable">
@@ -73,7 +85,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">No Invoice</label>
-                                    <select name="id_order" id="" class="form-select">
+                                    <select name="id_order" id="" class="form-select" required>
                                         <option value="0">Choose</option>
                                         @foreach ($order as $pe)
                                             <option value="{{ $pe->id_order }}">{{ $pe->invoice }}</option>
@@ -84,7 +96,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nama Produk</label>
-                                    <select name="id_produk" id="" class="form-select">
+                                    <select name="id_produk" id="" class="form-select" required>
                                         <option value="0">Choose</option>
                                         @foreach ($produk2 as $p)
                                             <option value="{{ $p->id }}">{{ $p->nama_produk }}</option>
@@ -95,13 +107,13 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Qty</label>
-                                    <input type="text" name="qty" class="form-control">
+                                    <input type="text" name="qty" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Price</label>
-                                    <input type="text" class="form-control" name="price">
+                                    <input type="text" class="form-control" name="price" required>
                                 </div>
                             </div>
                         </div>
