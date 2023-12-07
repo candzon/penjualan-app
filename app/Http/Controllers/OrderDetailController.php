@@ -43,12 +43,12 @@ class OrderDetailController extends Controller
     {
         //
         try {
-            $this->validate($request, [
-                'id_order' => 'required',
-                'id_produk' => 'required',
-                'qty' => 'required',
-                'price' => 'required',
-            ]);
+            // $this->validate($request, [
+            //     'id_order' => 'required',
+            //     'id_produk' => 'required',
+            //     'qty' => 'required',
+            //     'price' => 'required',
+            // ]);
 
             $invoice = $request->id_order;
             $id_produk = $request->id_produk;

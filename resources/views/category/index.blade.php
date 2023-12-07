@@ -101,7 +101,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
-                                    <input type="text" name="keterangan" class="form-control" required>
+                                    <input type="text" name="keterangan" class="form-control">
                                 </div>
                             </div>
                         </div>

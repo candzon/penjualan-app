@@ -47,7 +47,7 @@
                                 <td>{{ $o->invoice }}</td>
                                 <td>{{ $getCustomer->nama_customer }}</td>
                                 <td>{{ $getUser->name }}</td>
-                                <td>{{ $o->total }}</td>
+                                <td>Rp {{ number_format($o->total) }}</td>
                                 <td class="action">
                                     <div class="row">
                                         <div class="col-sm-2">

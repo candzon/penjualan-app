@@ -44,13 +44,13 @@ class ProductController extends Controller
     {
         //
         try {
-            $this->validate($request, [
-                'nama_produk' => 'required',
-                'price' => 'required',
-                'stok' => 'required',
-                'category_id' => 'required',
-                'file' => 'required'
-            ]);
+            // $this->validate($request, [
+            //     'nama_produk' => 'required',
+            //     'price' => 'required',
+            //     'stok' => 'required',
+            //     'category_id' => 'required',
+            //     'file' => 'required'
+            // ]);
 
             $nama_produk = $request->input('nama_produk');
             $price = $request->input('price');
@@ -74,13 +74,12 @@ class ProductController extends Controller
                 alert('error', 'File tidak ditemukan');
             }
             $produk->save();
+
+            return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan');
         } catch (\Throwable $th) {
             //throw $th;
             return redirect()->route('products.index')->with('error', 'Produk gagal ditambahkan');
         }
-
-
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**

@@ -35,12 +35,12 @@ class CustomerController extends Controller
     {
         //
         try {
-            $this->validate($request, [
-                'nama_customer' => 'required',
-                'email' => 'required',
-                'address' => 'required',
-                'phone' => 'required',
-            ]);
+            // $this->validate($request, [
+            //     'nama_customer' => 'required',
+            //     'email' => 'required',
+            //     'address' => 'required',
+            //     // 'phone' => 'required',
+            // ]);
 
             $nama_customer = $request->input('nama_customer');
             $email = $request->input('email');
@@ -53,6 +53,8 @@ class CustomerController extends Controller
             $customer->address = $address;
             $customer->phone = $phone;
             $customer->save();
+
+            return redirect()->route('customer.index')->with('success', 'Customer berhasil ditambahkan');
         } catch (\Throwable $th) {
             //throw $th;
             return redirect()->route('customer.index')->with('error', 'Customer gagal ditambahkan');
@@ -94,10 +96,10 @@ class CustomerController extends Controller
             $customer->phone = $phone;
             $customer->save();
 
-            return redirect()->route('customer.index')->with('success', 'Customer berhasil diupdate');
+            return redirect()->route('customer.index')->with('success', 'Customer berhasil diubah');
         } catch (\Throwable $th) {
             //throw $th;
-            return redirect()->route('customer.index')->with('error', 'Customer gagal diupdate');
+            return redirect()->route('customer.index')->with('error', 'Customer gagal diubah');
         }
     }
 

@@ -40,11 +40,11 @@ class OrderController extends Controller
     {
 
         try {
-            $this->validate($request, [
-                'id_customer' => 'required',
-                'id_user' => 'required',
-                'total' => 'required',
-            ]);
+            // $this->validate($request, [
+            //     'id_customer' => 'required',
+            //     'id_user' => 'required',
+            //     'total' => 'required',
+            // ]);
 
             $order = new Order();
             $order->invoice = $this->generateInvoiceNumber();
@@ -52,7 +52,7 @@ class OrderController extends Controller
             $order->user_id = $request->id_user;
             $order->total = intval(preg_replace('/[^0-9]/', '', $request->total));
             $order->save();
-            return redirect()->route('order.index')->with('success', 'Order created successfully.');
+            return redirect()->route('order.index')->with('success', 'Order berhasil ditambahkan.');
         } catch (\Throwable $th) {
             //throw $th;
             return redirect()->route('order.index')->with('error', 'Order gagal ditambahkan');
@@ -90,10 +90,10 @@ class OrderController extends Controller
             $order->updated_at = now();
             $order->save();
 
-            return redirect()->route('order.index')->with('success', 'Order updated successfully.');
+            return redirect()->route('order.index')->with('success', 'Order berhasil diupdate.');
         } catch (\Throwable $th) {
             //throw $th;
-            return redirect()->route('order.index')->with('error', 'Order gagal ditambahkan');
+            return redirect()->route('order.index')->with('error', 'Order gagal diupdate');
         }
     }
 
@@ -106,7 +106,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         $order->delete();
 
-        return redirect()->route('order.index')->with('success', 'Order deleted successfully.');
+        return redirect()->route('order.index')->with('success', 'Order berhasil dihapus.');
     }
 
 

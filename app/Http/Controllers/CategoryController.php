@@ -34,9 +34,9 @@ class CategoryController extends Controller
     {
         //
         try {
-            $this->validate($request, [
-                'nama_kategori' => 'required',
-            ]);
+            // $this->validate($request, [
+            //     'nama_kategori' => 'required',
+            // ]);
 
             $nama_kategori = $request->input('nama_kategori');
             $keterangan = $request->input('keterangan');
@@ -45,6 +45,8 @@ class CategoryController extends Controller
             $category->nama_kategori = $nama_kategori;
             $category->keterangan = $keterangan;
             $category->save();
+
+            return redirect()->route('category.index')->with('success', 'Category berhasil ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('category.index')->with('error', 'Category gagal ditambahkan');
         }

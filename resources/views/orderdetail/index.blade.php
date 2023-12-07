@@ -43,7 +43,7 @@
                                 <td>{{ $o->invoice }}</td>
                                 <td>{{ $o->nama_produk }}</td>
                                 <td>{{ $o->qty }}</td>
-                                <td>{{ $o->price }}</td>
+                                <td>Rp {{ number_format($o->price) }}</td>
                                 <td class="action">
                                     <div class="row">
                                         <div class="col-sm-2">
