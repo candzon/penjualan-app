@@ -117,9 +117,14 @@ class OrderDetailController extends Controller
     public function destroy(string $id)
     {
         //
-        $orderDetail = Order_detail::findOrFail($id);
-        $orderDetail->delete();
+        try {
+            $orderDetail = Order_detail::findOrFail($id);
+            $orderDetail->delete();
 
-        return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil dihapus');
+            return redirect()->route('orderdetail.index')->with('success', 'Order Detail berhasil dihapus');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('orderdetail.index')->with('error', 'Order Detail gagal dihapus');
+        }
     }
 }

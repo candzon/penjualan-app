@@ -103,10 +103,15 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
-        $order = Order::find($id);
-        $order->delete();
+        try {
+            $order = Order::findOrfail($id);
+            $order->delete();
 
-        return redirect()->route('order.index')->with('success', 'Order berhasil dihapus.');
+            return redirect()->route('order.index')->with('success', 'Order berhasil dihapus.');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('order.index')->with('error', 'Order gagal dihapus');
+        }
     }
 
 

@@ -96,9 +96,13 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         //
-        $category = Category::find($id);
-        $category->delete();
+        try {
+            $category = Category::find($id);
+            $category->delete();
 
-        return redirect()->route('category.index')->with('success', 'Category berhasil dihapus');
+            return redirect()->route('category.index')->with('success', 'Category berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->route('category.index')->with('error', 'Category gagal dihapus');
+        }
     }
 }

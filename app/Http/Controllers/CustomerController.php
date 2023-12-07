@@ -109,9 +109,14 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //s
-        $customer = Customer::find($id);
-        $customer->delete();
+        try {
+            $customer = Customer::find($id);
+            $customer->delete();
 
-        return redirect()->route('customer.index')->with('success', 'Customer berhasil dihapus');
+            return redirect()->route('customer.index')->with('success', 'Customer berhasil dihapus');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('customer.index')->with('error', 'Customer gagal dihapus');
+        }
     }
 }
