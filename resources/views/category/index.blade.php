@@ -53,13 +53,13 @@
                                 @else
                                     <td>{{ $item->updated_at }}</td>
                                 @endif
-                                <td class="action">
+                                <td>
                                     <div class="row">
-                                        <div class="col-sm-2">
+                                        <div class="col-auto">
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModalEdit{{ $item->id }}">Edit</button>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-auto">
                                             <form action="{{ route('category.destroy', ['category' => $item->id]) }}"
                                                 method="POST">
                                                 @csrf

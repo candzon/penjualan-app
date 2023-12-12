@@ -47,11 +47,11 @@
                                 <td>{{ $c->phone }}</td>
                                 <td class="action">
                                     <div class="row">
-                                        <div class="col-sm-2">
+                                        <div class="col-auto">
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModalEdit{{ $c->id }}">Edit</button>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-auto">
                                             <form action="{{ route('customer.destroy', ['customer' => $c->id]) }}"
                                                 method="POST">
                                                 @csrf

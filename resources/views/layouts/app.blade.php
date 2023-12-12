@@ -45,19 +45,6 @@
 
                 .action {
                     display: flex;
-
-                    button {
-                        margin-right: 10px;
-                        cursor: pointer;
-                        background-color: #f3f3f5;
-                        border: none;
-                        padding: 5px 10px;
-                        border-radius: 2px;
-
-                        &:last-child {
-                            margin-right: 0;
-                        }
-                    }
                 }
             }
         }
@@ -108,11 +95,6 @@
                         }
                     }
 
-                    .action {
-                        position: absolute;
-                        top: 10px;
-                        right: 10px;
-                    }
                 }
             }
         }

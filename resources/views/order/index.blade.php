@@ -50,11 +50,11 @@
                                 <td>Rp {{ number_format($o->total) }}</td>
                                 <td class="action">
                                     <div class="row">
-                                        <div class="col-sm-2">
+                                        <div class="col-auto">
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModalEdit{{ $o->id_order }}">Edit</button>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-auto">
                                             <form action="{{ route('order.destroy', ['order' => $o->id_order]) }}"
                                                 method="POST">
                                                 @csrf

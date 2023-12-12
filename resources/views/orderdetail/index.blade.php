@@ -46,11 +46,11 @@
                                 <td>Rp {{ number_format($o->price) }}</td>
                                 <td class="action">
                                     <div class="row">
-                                        <div class="col-sm-2">
+                                        <div class="col-auto">
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModalEdit{{ $o->id_order_detail }}">Edit</button>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-auto">
                                             <form
                                                 action="{{ route('orderdetail.destroy', ['orderdetail' => $o->id_order_detail]) }}"
                                                 method="POST">

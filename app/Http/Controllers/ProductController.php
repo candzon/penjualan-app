@@ -44,13 +44,6 @@ class ProductController extends Controller
     {
         //
         try {
-            // $this->validate($request, [
-            //     'nama_produk' => 'required',
-            //     'price' => 'required',
-            //     'stok' => 'required',
-            //     'category_id' => 'required',
-            //     'file' => 'required'
-            // ]);
 
             $nama_produk = $request->input('nama_produk');
             $price = $request->input('price');
