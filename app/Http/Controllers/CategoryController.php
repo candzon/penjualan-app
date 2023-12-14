@@ -16,7 +16,11 @@ class CategoryController extends Controller
         //
         $title = 'Category';
         $categories = (new Category())->getCategories();
-        return view('category.index', compact(['categories', 'title']));
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        } else {
+            return view('category.index', compact(['categories', 'title']));
+        }
     }
 
     /**

@@ -21,12 +21,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $produks = produk::orderBy('id', 'desc')->with('category')->get();
         $title = 'Dashboard';
         $produks = (new Produk)->getProduks();
         $categories = (new Category)->getCategories();
 
-        return view('products.index', compact(['produks', 'categories', 'title']));
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        } else {
+            return view('products.index', compact(['produks', 'categories', 'title']));
+        }
     }
 
     /**

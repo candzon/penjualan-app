@@ -25,7 +25,11 @@ class OrderDetailController extends Controller
         $getOrder = DB::table('orders as a')->select('a.id as id_order', 'a.invoice')->get();
         $produk = (new Produk)->getProduks();
         $produk2 = DB::table('produks')->get();
-        return view('orderdetail.index', compact(['getOrder', 'orderDetail2', 'produk', 'produk2', 'order', 'orderDetail', 'title']));
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        } else {
+            return view('orderdetail.index', compact(['getOrder', 'orderDetail2', 'produk', 'produk2', 'order', 'orderDetail', 'title']));
+        }
     }
 
     /**

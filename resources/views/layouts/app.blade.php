@@ -43,9 +43,7 @@
                     border-bottom: 1px solid #eee;
                 }
 
-                .action {
-                    display: flex;
-                }
+
             }
         }
 
@@ -124,7 +122,7 @@
                             <li class="nav-item p-2">
                                 <a class="nav-link" href="{{ route('products.index') }}">
                                     <span class="nav-link-title">
-                                        Dashboard
+                                        Products
                                     </span>
                                 </a>
                             </li>

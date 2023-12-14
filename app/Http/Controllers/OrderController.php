@@ -22,7 +22,11 @@ class OrderController extends Controller
         $order2 = (new Order())->getOrder();
         $customers = (new Customer())->getCustomers();
         $users = DB::table('users')->get();
-        return view('order.index', compact(['order2', 'customers', 'users', 'orders', 'title']));
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        } else {
+            return view('order.index', compact(['order2', 'customers', 'users', 'orders', 'title']));
+        }
     }
 
     /**

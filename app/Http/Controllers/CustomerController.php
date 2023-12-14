@@ -17,7 +17,11 @@ class CustomerController extends Controller
         //
         $title = 'Customer';
         $customers = (new Customer())->getCustomers();
-        return view('customer.index', compact(['customers', 'title']));
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        } else {
+            return view('customer.index', compact(['customers', 'title']));
+        }
     }
 
     /**
