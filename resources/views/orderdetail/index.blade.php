@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Price</label>
+                                    <label for="exampleFormControlInput1" hidden class="form-label">Price</label>
                                     <input type="text" class="form-control" name="price" required>
                                 </div>
                             </div>

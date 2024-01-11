@@ -35,8 +35,8 @@
                             <div class="row">
                                 <div class="col">
                                     <h6 class="card-text" style="color: gray">Harga</h6>
-                                    <h6 class="card-text" style="font-weight: bold">Rp
-                                        {{ number_format($item->price) }}</h6>
+                                    <h6 class="card-text" style="font-weight: bold">
+                                        Rp {{ $item->price }}</h6>
                                 </div>
                                 <div class="col-auto">
                                     <h6 class="card-text" style="color: gray">Stok</h6>
